@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Tạo truyện mới</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Layout Container -->
+    <div class="flex">
+      <!-- Sidebar -->
+
+      <!-- Main Content -->
+      <div class="flex-1">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+          <div class="flex justify-between items-center px-6 py-4">
+            <div>
+              <h1 class="text-2xl font-semibold text-gray-800">
+                Tạo truyện mới
+              </h1>
+              <p class="text-gray-600 text-sm">
+                Thêm một truyện mới vào hệ thống
+              </p>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-700">Admin</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Form Content -->
+        <div class="p-6">
+          <div class="max-w-3xl mx-auto">
+            <!-- Form Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                  <i class="fas fa-plus-circle text-blue-600 mr-2"></i>
+                  Tạo truyện mới
+                </h2>
+                <p class="text-gray-600">
+                  Điền đầy đủ thông tin để tạo truyện mới
+                </p>
+              </div>
+
+             <form class="space-y-6" method="POST" action="/admin/stories"  enctype="multipart/form-data">
+  <!-- Tên truyện -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      <i class="fas fa-book text-blue-500 mr-2"></i> Tên truyện
+    </label>
+    <input
+      name="title"
+      type="text"
+      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+        <%= errors?.title ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      placeholder="Nhập tên truyện..."
+      value="<%= old?.title || '' %>"
+    />
+    <% if (errors?.title) { %>
+      <p class="text-sm text-red-600 mt-1"><%= errors.title %></p>
+    <% } %>
+  </div>
+  
+<!-- File ảnh -->
+  <div>
+  <label class="block text-sm font-medium text-gray-700 mb-2">
+    <i class="fas fa-image text-pink-500 mr-2"></i> Ảnh bìa truyện
+  </label>
+  <input
+    type="file"
+    name="image"
+    accept="image/*"
+    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
+  />
+</div>
+
+  <!-- Văn án -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      <i class="fas fa-file-alt text-green-500 mr-2"></i> Văn án của truyện
+    </label>
+    <textarea
+      name="summary"
+      rows="4"
+      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+        <%= errors?.summary ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      placeholder="Viết văn án giới thiệu về truyện..."
+    ><%= old?.summary || '' %></textarea>
+    <% if (errors?.summary) { %>
+      <p class="text-sm text-red-600 mt-1"><%= errors.summary %></p>
+    <% } %>
+  </div>
+
+  <!-- Thể loại và Tác giả -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+   <div class="mb-6">
+  <label for="genre" class="block text-sm font-semibold text-gray-800 mb-2">
+    <i class="fas fa-tags text-purple-600 mr-2"></i> Thể loại truyện
+  </label>
+
+  <% const selectedGenres = Array.isArray(old?.genre) ? old.genre : [old?.genre].filter(Boolean) %>
+<% const genres = [
+  { title: "ABO", value: "abo" },
+  { title: "BE", value: "be" },
+  { title: "Báo Thù", value: "bao-thu" },
+  { title: "Chữa Lành", value: "chua-lanh" },
+  { title: "Cung Đấu", value: "cung-dau" },
+  { title: "Cổ Đại", value: "co-dai" },
+  { title: "Cứu Rỗi", value: "cuu-roi" },
+  { title: "Gia Đấu", value: "gia-dau" },
+  { title: "HE", value: "he" },
+  { title: "Hiện Đại", value: "hien-dai" },
+  { title: "Hoàng Cung", value: "hoang-cung" },
+  { title: "Hoán Đổi Thân Xác", value: "hoan-doi-than-xac" },
+  { title: "Huyền Huyễn", value: "huyen-huyen" },
+  { title: "Hài Hước", value: "hai-huoc" },
+  { title: "Hào Môn", value: "hao-mon" },
+  { title: "Hệ Thống", value: "he-thong" },
+  { title: "Kinh Dị", value: "kinh-di" },
+  { title: "Linh Dị", value: "linh-di" },
+  { title: "Mạt Thế", value: "mat-the" },
+  { title: "Ngôn Tình", value: "ngon-tinh" },
+  { title: "Ngược", value: "nguoc" },
+  { title: "Ngọt Sủng", value: "ngot-sung" },
+  { title: "Nhân Thú", value: "nhan-thu" },
+  { title: "Nữ Cường", value: "nu-cuong" },
+  { title: "OE", value: "oe" },
+  { title: "SE", value: "se" },
+  { title: "Showbiz", value: "showbiz" },
+  { title: "Sinh Tồn", value: "sinh-ton" },
+  { title: "Sảng Văn", value: "sang-van" },
+  { title: "Thanh Xuân Vườn Trường", value: "thanh-xuan-vuon-truong" },
+  { title: "Thiên Kim", value: "thien-kim" },
+  { title: "Thế Thân", value: "the-than" },
+  { title: "Trọng Sinh", value: "trong-sinh" },
+  { title: "Tu Tiên", value: "tu-tien" },
+  { title: "Tình Cảm", value: "tinh-cam" },
+  { title: "Tình Cảm Gia Đình", value: "tinh-cam-gia-dinh" },
+  { title: "Tổng Tài", value: "tong-tai" },
+  { title: "Tội Phạm", value: "toi-pham" },
+  { title: "Vã Mặt", value: "va-mat" },
+  { title: "Xuyên Không", value: "xuyen-khong" },
+  { title: "Xuyên Sách", value: "xuyen-sach" },
+  { title: "Đam Mỹ", value: "dam-my" },
+  { title: "Điền Văn", value: "dien-van" },
+  { title: "Đề cử", value: "de-cu" },
+  { title: "Đọc Tâm", value: "doc-tam" }
+] %>
+
+
+  <div class="relative">
+    <select
+      name="genre[]"
+      multiple
+      class="w-full h-48 bg-white px-4 py-2 pr-10 border text-sm rounded-xl shadow-sm appearance-none
+        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+        <%= errors?.genre ? 'border-red-500 ring-red-300' : 'border-gray-300' %>"
+    >
+      <% for (let genre of genres) { %>
+        <option value="<%= genre.value %>" <%= selectedGenres.includes(genre.value) ? 'selected' : '' %>>
+          <%= genre.title %>
+        </option>
+      <% } %>
+    </select>
+
+    <!-- Biểu tượng dropdown giả lập để trông hiện đại -->
+    <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+
+  <% if (errors?.genre) { %>
+    <p class="text-sm text-red-600 mt-2"><%= errors.genre %></p>
+  <% } %>
+</div>
+
+
+
+    <div>
+      <label for="author" class="block text-sm font-medium text-gray-700 mb-2">
+        <i class="fas fa-user-edit text-orange-500 mr-2"></i> Tác giả
+      </label>
+      <input
+        name="author"
+        type="text"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+          <%= errors?.author ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+        placeholder="Tên tác giả..."
+        value="<%= old?.author || '' %>"
+      />
+      <% if (errors?.author) { %>
+        <p class="text-sm text-red-600 mt-1"><%= errors.author %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Nội dung truyện -->
+  <div>
+    <label for="content" class="block text-sm font-medium text-gray-700 mb-2">
+      <i class="fas fa-feather-alt text-indigo-500 mr-2"></i> Nội dung truyện
+    </label>
+    <textarea
+      name="content"
+      rows="8"
+      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+        <%= errors?.content ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      placeholder="Viết nội dung truyện tại đây..."
+    ><%= old?.content || '' %></textarea>
+    <% if (errors?.content) { %>
+      <p class="text-sm text-red-600 mt-1"><%= errors.content %></p>
+    <% } %>
+    <p class="text-sm text-gray-500 mt-1">Có thể sử dụng các thẻ HTML cơ bản để định dạng</p>
+  </div>
+  
+  <!-- Số chương muốn chia -->
+<div>
+  <label for="number_of_chapters" class="block text-sm font-medium text-gray-700 mb-2">
+    <i class="fas fa-layer-group text-purple-500 mr-2"></i> Số chương muốn chia
+  </label>
+  <input
+    name="number_of_chapters"
+    type="number"
+    min="1"
+    value="<%= old?.number_of_chapters || 1 %>"
+    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+      <%= errors?.number_of_chapters ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+    placeholder="Ví dụ: 10"
+  />
+  <% if (errors?.number_of_chapters) { %>
+    <p class="text-sm text-red-600 mt-1"><%= errors.number_of_chapters %></p>
+  <% } %>
+</div>
+
+<!-- Đánh dấu truyện nổi bật -->
+<div>
+  <label for="is_featured" class="flex items-center space-x-3">
+    <input
+      name="is_featured"
+      type="checkbox"
+      class="w-4 h-4 text-yellow-500 bg-gray-100 border-gray-300 rounded focus:ring-yellow-400 focus:ring-2"
+      <%= old?.is_featured ? 'checked' : '' %>
+    />
+    <span class="text-sm font-medium text-gray-700">
+      <i class="fas fa-star text-yellow-500 mr-2"></i> Đánh dấu là truyện nổi bật
+    </span>
+  </label>
+</div>
+
+  <!-- Đánh giá, Số người đọc, Ngày phát hành -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div>
+      <label for="rating" class="block text-sm font-medium text-gray-700 mb-2">
+        <i class="fas fa-star text-yellow-500 mr-2"></i> Đánh giá
+      </label>
+      <select
+        name="rating"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+          <%= errors?.rating ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      >
+        <option value="">Chọn đánh giá</option>
+        <% for (let i = 1; i <= 5; i++) { %>
+          <option value="<%= i %>" <%= old?.rating == i ? 'selected' : '' %>><%= i %> sao</option>
+        <% } %>
+      </select>
+      <% if (errors?.rating) { %>
+        <p class="text-sm text-red-600 mt-1"><%= errors.rating %></p>
+      <% } %>
+    </div>
+
+    <div>
+      <label for="readers" class="block text-sm font-medium text-gray-700 mb-2">
+        <i class="fas fa-users text-red-500 mr-2"></i> Số lượng người đọc
+      </label>
+      <input
+        name="readers"
+        type="number"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+          <%= errors?.readers ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+        placeholder="0"
+        min="0"
+        value="<%= old?.readers || '' %>"
+      />
+      <% if (errors?.readers) { %>
+        <p class="text-sm text-red-600 mt-1"><%= errors.readers %></p>
+      <% } %>
+    </div>
+
+   <% 
+  const releaseDateISO = old?.release_date || ''; 
+  const releaseDateVN = releaseDateISO
+    ? new Date(releaseDateISO).toLocaleDateString('vi-VN')
+    : '';
+%>
+
+<div class="mb-6">
+  <label for="release_date" class="block text-sm font-semibold text-gray-800 mb-2">
+    <i class="fas fa-calendar-alt text-teal-500 mr-2"></i> Ngày phát hành
+  </label>
+
+  <input
+    name="release_date"
+    type="date"
+    class="w-full px-4 py-2 border rounded-xl shadow-sm text-sm
+      focus:outline-none focus:ring-2
+      <%= errors?.release_date ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500' %>"
+    value="<%= releaseDateISO %>"
+  />
+
+  <% if (releaseDateVN) { %>
+    <p class="mt-2 text-sm text-gray-600">
+      📅 Hiển thị: <strong><%= releaseDateVN %></strong>
+    </p>
+  <% } %>
+
+  <% if (errors?.release_date) { %>
+    <p class="text-sm text-red-600 mt-1"><%= errors.release_date %></p>
+  <% } %>
+</div>
+
+
+
+  </div>
+
+  <!-- Trạng thái hoàn thành -->
+  <div>
+    <label for="is_completed" class="flex items-center space-x-3">
+      <input
+        name="is_completed"
+        type="checkbox"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+        <%= old?.is_completed ? 'checked' : '' %>
+      />
+      <span class="text-sm font-medium text-gray-700">
+        <i class="fas fa-check-circle text-green-500 mr-2"></i> Đã hoàn thành
+      </span>
+    </label>
+  </div>
+
+  <!-- Nút hành động -->
+  <div class="flex justify-end space-x-4 pt-6 border-t">
+ <a href="/admin/stories">
+     <button
+      type="button"
+      class="px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 transition duration-200"
+    >
+       <i class="fas fa-arrow-left mr-2"></i>
+  Quay lại
+    </button></a>
+    <button
+      type="submit"
+      class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+    >
+      <i class="fas fa-save mr-2"></i> Lưu truyện
+    </button>
+  </div>
+</form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

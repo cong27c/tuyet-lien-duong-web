@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiếng Vọng Của Mối Tình Đơn Phương - Tuyết Liên Đường</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .gradient-bg {
+        background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+      }
+      .shadow-custom {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+      .manga-cover {
+        transition: transform 0.3s ease;
+      }
+      .manga-cover:hover {
+        transform: scale(1.05);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+        transform: translateY(-1px);
+      }
+      .btn-secondary {
+        background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+        transition: all 0.3s ease;
+      }
+      .btn-secondary:hover {
+        background: linear-gradient(135deg, #e0e0e0 0%, #bdbdbd 100%);
+        transform: translateY(-1px);
+      }
+      .stats-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border: 1px solid #e3f2fd;
+      }
+      .breadcrumb {
+        background: linear-gradient(135deg, #e3f2fd 0%, #e1f5fe 100%);
+      }
+      .description-text {
+        line-height: 1.8;
+      }
+      .tag-item {
+        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        transition: all 0.3s ease;
+      }
+      .tag-item:hover {
+        background: linear-gradient(135deg, #bbdefb 0%, #90caf9 100%);
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <!-- Manga Info Section -->
+      <div class="bg-white rounded-lg shadow-custom p-6 mb-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <!-- Manga Cover -->
+          <div class="lg:col-span-1">
+            <div
+              class="manga-cover bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg overflow-hidden aspect-[3/4] flex items-center justify-center"
+            >
+              <i class="fas fa-book text-white text-6xl"></i>
+            </div>
+          </div>
+
+          <!-- Manga Details -->
+          <div class="lg:col-span-3">
+            <div class="space-y-4">
+              <!-- Title -->
+              <h1
+                class="text-3xl md:text-4xl font-bold text-gray-800 leading-tight"
+              >
+                Tiếng Vọng Của Mối Tình Đơn Phương
+              </h1>
+
+              <!-- Basic Info -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="space-y-3">
+                  <div class="flex items-center">
+                    <i class="fas fa-user text-blue-600 w-5"></i>
+                    <span class="text-gray-600 ml-2">Tác giả:</span>
+                    <span class="ml-2 font-medium text-gray-800"
+                      >Yamada Taro</span
+                    >
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-paint-brush text-blue-600 w-5"></i>
+                    <span class="text-gray-600 ml-2">Họa sĩ:</span>
+                    <span class="ml-2 font-medium text-gray-800"
+                      >Yamada Taro</span
+                    >
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-calendar text-blue-600 w-5"></i>
+                    <span class="text-gray-600 ml-2">Năm phát hành:</span>
+                    <span class="ml-2 font-medium text-gray-800">2023</span>
+                  </div>
+                </div>
+                <div class="space-y-3">
+                  <div class="flex items-center">
+                    <i class="fas fa-info-circle text-blue-600 w-5"></i>
+                    <span class="text-gray-600 ml-2">Tình trạng:</span>
+                    <span
+                      class="ml-2 px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium"
+                      >Đang cập nhật</span
+                    >
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-eye text-blue-600 w-5"></i>
+                    <span class="text-gray-600 ml-2">Lượt xem:</span>
+                    <span class="ml-2 font-medium text-gray-800"
+                      >1,234,567</span
+                    >
+                  </div>
+                  <div class="flex items-center">
+                    <i class="fas fa-star text-yellow-500 w-5"></i>
+                    <span class="text-gray-600 ml-2">Đánh giá:</span>
+                    <span class="ml-2 font-medium text-gray-800">4.8/5</span>
+                    <span class="text-gray-500 text-sm ml-1"
+                      >(1,234 votes)</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tags -->
+              <div class="flex flex-wrap gap-2 mt-4">
+                <span
+                  class="tag-item px-3 py-1 rounded-full text-sm font-medium text-blue-800 cursor-pointer"
+                  >Romance</span
+                >
+                <span
+                  class="tag-item px-3 py-1 rounded-full text-sm font-medium text-blue-800 cursor-pointer"
+                  >Drama</span
+                >
+                <span
+                  class="tag-item px-3 py-1 rounded-full text-sm font-medium text-blue-800 cursor-pointer"
+                  >School Life</span
+                >
+                <span
+                  class="tag-item px-3 py-1 rounded-full text-sm font-medium text-blue-800 cursor-pointer"
+                  >Shoujo</span
+                >
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                <button
+                  class="btn-primary text-white px-8 py-3 rounded-lg font-semibold shadow-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-book-open mr-2"></i>
+                  Đọc truyện
+                </button>
+                <button
+                  class="btn-secondary text-gray-800 px-8 py-3 rounded-lg font-semibold shadow-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-bookmark mr-2"></i>
+                  Thêm vào tủ sách
+                </button>
+                <button
+                  class="btn-secondary text-gray-800 px-8 py-3 rounded-lg font-semibold shadow-lg flex items-center justify-center"
+                >
+                  <i class="fas fa-share-alt mr-2"></i>
+                  Chia sẻ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div class="stats-card p-4 rounded-lg text-center">
+          <div class="text-2xl font-bold text-blue-600">152</div>
+          <div class="text-sm text-gray-600">Chương</div>
+        </div>
+        <div class="stats-card p-4 rounded-lg text-center">
+          <div class="text-2xl font-bold text-green-600">1.2M</div>
+          <div class="text-sm text-gray-600">Lượt xem</div>
+        </div>
+        <div class="stats-card p-4 rounded-lg text-center">
+          <div class="text-2xl font-bold text-purple-600">15K</div>
+          <div class="text-sm text-gray-600">Theo dõi</div>
+        </div>
+        <div class="stats-card p-4 rounded-lg text-center">
+          <div class="text-2xl font-bold text-orange-600">4.8</div>
+          <div class="text-sm text-gray-600">Đánh giá</div>
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <div class="bg-white rounded-lg shadow-custom p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Nội dung truyện</h2>
+        <div class="description-text text-gray-700 leading-relaxed">
+          <p class="mb-4">
+            "Tiếng Vọng Của Mối Tình Đơn Phương" là một câu chuyện cảm động về
+            tình yêu đơn phương của một cô gái trẻ tên Sakura. Cô đã âm thầm yêu
+            thích Takeshi - một chàng trai học cùng lớp từ thời trung học.
+          </p>
+          <p class="mb-4">
+            Sakura luôn che giấu tình cảm của mình, chỉ quan sát Takeshi từ xa
+            và mong ước một ngày nào đó có thể tỏ tình với anh. Tuy nhiên, cuộc
+            sống không như cô mơ ước khi Takeshi bắt đầu hẹn hò với một cô gái
+            khác.
+          </p>
+          <p class="mb-4">
+            Câu chuyện theo chân Sakura trong hành trình vượt qua nỗi đau của
+            tình yêu đơn phương, tìm lại chính mình và học cách yêu thương bản
+            thân. Đây là một tác phẩm đầy cảm xúc về tình yêu, tình bạn và sự
+            trưởng thành.
+          </p>
+          <p class="mb-4">
+            Với phong cách vẽ tinh tế và cốt truyện chân thực, "Tiếng Vọng Của
+            Mối Tình Đơn Phương" chắc chắn sẽ khiến bạn rơi nước mắt và suy ngẫm
+            về những mối tình đầu trong cuộc đời.
+          </p>
+          <p>
+            Hãy cùng theo dõi hành trình của Sakura để xem cô sẽ vượt qua những
+            thử thách này như thế nào và liệu tình yêu có thực sự tìm đến với cô
+            hay không.
+          </p>
+        </div>
+      </div>
+
+      <!-- Latest Chapters -->
+      <div class="bg-white rounded-lg shadow-custom p-6">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Danh sách chương</h2>
+          <div class="flex items-center space-x-2">
+            <button
+              class="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg hover:bg-blue-200 transition-colors"
+            >
+              <i class="fas fa-sort-amount-down mr-2"></i>
+              Mới nhất
+            </button>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <!-- Chapter Item -->
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold"
+              >
+                152
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">
+                  Chương 152: Lời tỏ tình cuối cùng
+                </h3>
+                <p class="text-sm text-gray-600">Cập nhật 2 giờ trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <i class="fas fa-eye"></i>
+              <span>12.5K</span>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold"
+              >
+                151
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">
+                  Chương 151: Quyết định quan trọng
+                </h3>
+                <p class="text-sm text-gray-600">Cập nhật 1 ngày trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <i class="fas fa-eye"></i>
+              <span>15.2K</span>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold"
+              >
+                150
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">
+                  Chương 150: Những kỷ niệm đẹp
+                </h3>
+                <p class="text-sm text-gray-600">Cập nhật 2 ngày trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <i class="fas fa-eye"></i>
+              <span>18.7K</span>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold"
+              >
+                149
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">
+                  Chương 149: Sự thật được hé lộ
+                </h3>
+                <p class="text-sm text-gray-600">Cập nhật 3 ngày trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <i class="fas fa-eye"></i>
+              <span>22.1K</span>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold"
+              >
+                148
+              </div>
+              <div>
+                <h3 class="font-semibold text-gray-800">
+                  Chương 148: Cuộc gặp gỡ bất ngờ
+                </h3>
+                <p class="text-sm text-gray-600">Cập nhật 4 ngày trước</p>
+              </div>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <i class="fas fa-eye"></i>
+              <span>19.3K</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 text-center">
+          <button
+            class="btn-primary text-white px-6 py-3 rounded-lg font-semibold"
+          >
+            Xem thêm chương
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

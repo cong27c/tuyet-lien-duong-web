@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - Chỉnh sửa truyện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-100 min-h-screen">
+    <!-- Layout Container -->
+    <div class="flex">
+      <!-- Sidebar -->
+
+      <!-- Main Content -->
+      <div class="flex-1">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+          <div class="flex justify-between items-center px-6 py-4">
+            <div>
+              <h1 class="text-2xl font-semibold text-gray-800">
+                Chỉnh sửa truyện
+              </h1>
+              <p class="text-gray-600 text-sm">
+                Cập nhật thông tin truyện "Con Gái Vàng Ngọc"
+              </p>
+            </div>
+            <div class="flex items-center space-x-4">
+              <div class="flex items-center space-x-2">
+                <span class="text-sm font-medium text-gray-700">Admin</span>
+              </div>
+            </div>
+          </div>
+        </header>
+        <!-- Form Content -->
+        <div class="p-6">
+          <div class="max-w-3xl mx-auto">
+            <!-- Form Card -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+              <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">
+                  <i class="fas fa-edit text-blue-600 mr-2"></i>
+                  Chỉnh sửa truyện
+                </h2>
+                <p class="text-gray-600">
+                  Cập nhật thông tin của truyện đã chọn
+                </p>
+              </div>
+
+              <form class="space-y-4" method="POST" action="/admin/stories/<%= story.id %>?_method=PATCH">
+  <!-- Tên truyện -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      <i class="fas fa-book text-blue-500 mr-2"></i> Tên truyện
+    </label>
+    <input
+      name="title"
+      type="text"
+      value="<%= old?.title || story.title || '' %>"
+      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+        <%= errors?.title ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      placeholder="Nhập tên truyện..."
+    />
+    <% if (errors?.title) { %>
+      <p class="text-sm text-red-600 mt-1"><%= errors.title %></p>
+    <% } %>
+  </div>
+
+  <!-- Văn án -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      <i class="fas fa-file-alt text-green-500 mr-2"></i> Văn án của truyện
+    </label>
+    <textarea
+      name="summary"
+      rows="4"
+      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+        <%= errors?.summary ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      placeholder="Viết văn án giới thiệu về truyện..."
+    ><%= old?.summary || story.summary || '' %></textarea>
+    <% if (errors?.summary) { %>
+      <p class="text-sm text-red-600 mt-1"><%= errors.summary %></p>
+    <% } %>
+  </div>
+
+  <!-- Thể loại và Tác giả -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        <i class="fas fa-tags text-purple-500 mr-2"></i> Thể loại truyện
+      </label>
+      <select
+        name="genre"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+          <%= errors?.genre ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      >
+        <% 
+        const selectedGenre = old?.genre || story.genre || '' 
+  
+        const genres = [
+          { title: "Chọn thể loại", value: "" },
+          { title: "Hành động", value: "hanh-dong" },
+          { title: "Tình cảm", value: "tinh-cam" },
+          { title: "Hài hước", value: "hai-huoc" },
+          { title: "Kinh dị", value: "kinh-di" },
+          { title: "Phiêu lưu", value: "phieu-luu" },
+          { title: "Khoa học viễn tưởng", value: "khoa-hoc" },
+          { title: "Fantasy", value: "fantasy" },
+          { title: "Light Novel", value: "light-novel" },
+          { title: "Slice of Life", value: "slice-of-life" },
+        ] %>
+        <% for (let genre of genres) { %>
+          <option value="<%= genre.value %>" <%= genre.value === selectedGenre ? 'selected' : '' %>><%= genre.title %></option>
+        <% } %>
+      </select>
+      <% if (errors?.genre) { %>
+        <p class="text-sm text-red-600 mt-1"><%= errors.genre %></p>
+      <% } %>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+        <i class="fas fa-user-edit text-orange-500 mr-2"></i> Tác giả
+      </label>
+      <input
+        name="author"
+        type="text"
+        value="<%= old?.author || story.author || '' %>"
+        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+          <%= errors?.author ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+        placeholder="Tên tác giả..."
+      />
+      <% if (errors?.author) { %>
+        <p class="text-sm text-red-600 mt-1"><%= errors.author %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Nội dung truyện -->
+  <div>
+    <label class="block text-sm font-medium text-gray-700 mb-2">
+      <i class="fas fa-feather-alt text-indigo-500 mr-2"></i> Nội dung truyện
+    </label>
+    <textarea
+      name="content"
+      rows="8"
+      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+        <%= errors?.content ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+      placeholder="Viết nội dung truyện tại đây..."
+    ><%= old?.content || story.content || '' %></textarea>
+    <% if (errors?.content) { %>
+      <p class="text-sm text-red-600 mt-1"><%= errors.content %></p>
+    <% } %>
+  </div>
+
+ <!-- Đánh giá -->
+ <div>
+ <% const selectedRating = parseInt(old?.rating || story.rating || '') %>
+<select
+  name="rating"
+  class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+    <%= errors?.rating ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+>
+  <option value="">Chọn đánh giá</option>
+  <% for (let i = 1; i <= 5; i++) { %>
+    <option value="<%= i %>" <%= selectedRating === i ? 'selected' : '' %>><%= i %> sao</option>
+  <% } %>
+</select>
+
+  <% if (errors?.rating) { %>
+    <p class="text-sm text-red-600 mt-1"><%= errors.rating %></p>
+  <% } %>
+
+  </div>
+ 
+
+<!-- Số lượng người đọc -->
+<div>
+  <label class="block text-sm font-medium text-gray-700 mb-2">
+    <i class="fas fa-users text-pink-500 mr-2"></i> Số lượng người đọc
+  </label>
+  <input
+    name="readers"
+    type="number"
+    min="0"
+    value="<%= old?.readers || story.readers || '' %>"
+    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+      <%= errors?.readers ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+    placeholder="Nhập số lượng người đọc..."
+  />
+  <% if (errors?.readers) { %>
+    <p class="text-sm text-red-600 mt-1"><%= errors.readers %></p>
+  <% } %>
+</div>
+
+<!-- Ngày phát hành -->
+<div>
+  <label class="block text-sm font-medium text-gray-700 mb-2">
+    <i class="fas fa-calendar-alt text-green-600 mr-2"></i> Ngày phát hành
+  </label>
+  <input
+    name="release_date"
+    type="date"
+    value="<%= old?.release_date || (story.release_date ? story.release_date.toISOString().substring(0, 10) : '') %>"
+    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
+      <%= errors?.release_date ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+  />
+  <% if (errors?.release_date) { %>
+    <p class="text-sm text-red-600 mt-1"><%= errors.release_date %></p>
+  <% } %>
+</div>
+
+<!-- Trạng thái hoàn thành -->
+<div class="flex items-center mt-4">
+  <input
+    type="checkbox"
+    name="completed"
+    value="1"
+    <%= (old?.completed || story.completed) ? 'checked' : '' %>
+    class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+  />
+  <label class="ml-2 block text-sm text-gray-700">
+    Đã hoàn thành
+  </label>
+</div>
+
+
+
+  <!-- Nút submit -->
+  <div class="flex justify-end space-x-4 pt-6 border-t">
+      <a
+    href="/admin/stories"
+    class="px-6 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400 transition duration-200 flex items-center"
+  >
+    <i class="fas fa-arrow-left mr-2"></i> Trở về
+  </a>
+    <button
+      type="submit"
+      class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-200"
+    >
+      <i class="fas fa-save mr-2"></i> Cập nhật truyện
+    </button>
+  </div>
+</form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

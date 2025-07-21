@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tổng hợp các series cực hot - MeTruyen</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .card-hover:hover {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <!-- Page Title -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          Tổng hợp các series cực hot
+        </h1>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Khám phá những bộ truyện tranh hot nhất, được yêu thích nhất hiện nay
+          với nội dung hấp dẫn và cập nhật thường xuyên.
+        </p>
+      </div>
+
+      <!-- Stats -->
+      <div class="flex justify-center mb-8">
+        <div class="bg-white rounded-lg shadow-sm px-6 py-3">
+          <span class="text-gray-600">Tổng cộng có </span>
+          <span class="font-semibold text-blue-600"
+            ><%= stories.length%> series hot</span
+          >
+        </div>
+      </div>
+
+      <!-- Series Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+        <% for(let story of stories) {%>
+        <!-- Manga Card -->
+        <a href="/truyen/<%= story.id %>" class="block">
+          <div class="manga-card bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="aspect-w-3 aspect-h-4 bg-gray-200">
+              <img
+                src="<%= story.image %>"
+                alt="<%= story.title %>"
+                class="w-full h-48 object-cover"
+                onerror="this.src='/images/default-thumbnail.jpg';"
+              />
+            </div>
+            <div class="p-3">
+              <h3 class="font-semibold text-sm mb-1 line-clamp-2">
+                <%= story.title %>
+              </h3>
+              <p class="text-xs text-gray-600 mb-2">
+                Chap <%= story.number_of_chapters %>
+              </p>
+              <div class="flex items-center text-xs text-gray-500">
+                <i class="fas fa-eye mr-1"></i>
+                <span><%= story.readers %></span>
+              </div>
+            </div>
+          </div>
+        </a>
+
+        <% } %>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-8 items-center space-x-1">
+        <% const current = pagination.page; const total = pagination.totalPages;
+        %>
+
+        <!-- Nút Previous -->
+        <% if (current > 1) { %>
+        <a
+          href="?page=<%= current - 1 %>"
+          class="px-3 py-2 rounded-l-md border border-gray-300 bg-white text-gray-700 hover:bg-blue-100"
+        >
+          &laquo;
+        </a>
+        <% } else { %>
+        <span
+          class="px-3 py-2 rounded-l-md border border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
+        >
+          &laquo;
+        </span>
+        <% } %>
+
+        <!-- Các nút số trang -->
+        <% for (let i = 1; i <= total; i++) { %> <% if (i === current) { %>
+        <span
+          class="px-3 py-2 border border-blue-600 bg-blue-600 text-white font-semibold"
+        >
+          <%= i %>
+        </span>
+        <% } else { %>
+        <a
+          href="?page=<%= i %>"
+          class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-blue-100"
+        >
+          <%= i %>
+        </a>
+        <% } %> <% } %>
+
+        <!-- Nút Next -->
+        <% if (current < total) { %>
+        <a
+          href="?page=<%= current + 1 %>"
+          class="px-3 py-2 rounded-r-md border border-gray-300 bg-white text-gray-700 hover:bg-blue-100"
+        >
+          &raquo;
+        </a>
+        <% } else { %>
+        <span
+          class="px-3 py-2 rounded-r-md border border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed"
+        >
+          &raquo;
+        </span>
+        <% } %>
+      </div>
+    </main>
+  </body>
+</html>

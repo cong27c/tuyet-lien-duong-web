@@ -1,0 +1,48 @@
+<div class="flex items-center justify-center min-h-screen"">
+<div class="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md relative ">
+  <!-- Nút quay lại -->
+  <a
+    href="/admin/stories"
+    class="absolute -top-4 -left-4 bg-gray-200 hover:bg-gray-300 text-gray-700 px-3 py-1.5 rounded-lg text-sm shadow-md transition"
+  >
+    ← Quay lại
+  </a>
+
+  <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">
+    Chỉnh sửa liên kết quảng cáo
+  </h2>
+  <form method="POST" action="/admin/overlay-links" class="space-y-5">
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 mb-1"
+        >Link TikTok</label
+      >
+      <input
+        type="url"
+        name="tiktok"
+        value="<%= links.tiktok %>"
+        required
+        class="w-full border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4 py-2 rounded-lg transition duration-200"
+      />
+    </div>
+    <div>
+      <label class="block text-sm font-semibold text-gray-700 mb-1"
+        >Link Shopee</label
+      >
+      <input
+        type="url"
+        name="shopee"
+        value="<%= links.shopee %>"
+        required
+        class="w-full border border-gray-300 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 px-4 py-2 rounded-lg transition duration-200"
+      />
+    </div>
+    <button
+      type="submit"
+      class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-lg transition duration-200"
+    >
+      Lưu thay đổi
+    </button>
+  </form>
+</div>
+</div>
+

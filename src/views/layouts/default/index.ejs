@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%-include("../../partials/head.ejs")%>
+  </head>
+  <body>
+    <div
+      id="adOverlay"
+      class="fixed inset-0 bg-transparent z-[9999] cursor-pointer items-center justify-center"
+      style="display: none"
+      onclick="handleClickRedirect()"
+    ></div>
+    <!-- header -->
+    <%-include("../../partials/header.ejs") %>
+    <!-- nav -->
+    <%-include("../../partials/nav.ejs") %>
+    <!-- body -->
+    <%- body %>
+    <!-- Footer -->
+    <%-include("../../partials/footer.ejs") %>
+    <script src="/assets/js/common.js"></script>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Con Gái Vàng Ngọc - Truyện Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body class="bg-gray-50 min-h-screen">
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <!-- Story Info Section -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <div class="flex flex-col lg:flex-row gap-6">
+          <!-- Cover Image -->
+          <div class="flex-shrink-0">
+            <img
+              src="<%= story.image  %>"
+              alt="Bìa truyện"
+              class="w-full lg:w-72 h-96 object-cover rounded-lg shadow-md"
+            />
+          </div>
+
+          <!-- Story Details -->
+          <div class="flex-1">
+            <!-- Title -->
+            <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+              <%= story.title %>
+            </h1>
+
+            <!-- Author -->
+            <div class="flex items-center mb-3">
+              <i class="fas fa-user-pen text-gray-500 mr-2"></i>
+              <span class="text-gray-600">Tác giả: </span>
+              <span class="font-medium text-gray-800 ml-1"
+                ><%= story.author %></span
+              >
+            </div>
+
+            <!-- Genre -->
+            <% const genres = typeof story.genre === 'string' ?
+            story.genre.split(',').map(g => g.trim()) : story.genre; %>
+            <div class="flex items-center mb-3 flex-wrap">
+              <i class="fas fa-tags text-gray-500 mr-2"></i>
+              <span class="text-gray-600 mr-2">Thể loại:</span>
+              <% for (let item of genres) { %>
+              <span
+                class="bg-pink-100 text-pink-800 text-sm px-3 py-1 rounded-full mr-2 mb-1"
+              >
+                <%= item %>
+              </span>
+              <% } %>
+            </div>
+
+            <!-- Status and Date -->
+            <div class="flex flex-wrap gap-4 mb-3">
+              <% const createdAt = new Date(story.release_date); const
+              vietnamTime = new Date(createdAt.getTime() + 7 * 60 * 60 * 1000);
+              const formattedDate = vietnamTime.toLocaleDateString("vi-VN", {
+              day: "2-digit", month: "2-digit", year: "numeric", }); %>
+              <div class="flex items-center">
+                <i class="fas fa-calendar-alt text-gray-500 mr-2"></i>
+                <span class="text-gray-600">Ngày phát hành: </span>
+                <span class="text-gray-800 ml-1"><%= formattedDate %></span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                <span
+                  class="bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full"
+                >
+                  Đã hoàn thành
+                </span>
+              </div>
+            </div>
+
+            <!-- Views and Rating -->
+            <div class="flex flex-wrap gap-6 mb-6">
+              <div class="flex items-center">
+                <i class="fas fa-eye text-gray-500 mr-2"></i>
+                <span class="text-gray-600">Lượt đọc: </span>
+                <span class="font-medium text-gray-800 ml-1"
+                  ><%= story.readers %></span
+                >
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-star text-yellow-500 mr-2"></i>
+                <span class="text-gray-600">Đánh giá: </span>
+                <div class="flex items-center ml-2">
+                  <div class="flex text-yellow-500">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="far fa-star"></i>
+                  </div>
+                  <span class="text-gray-600 ml-1"
+                    >(<%= story.rating %>/5)</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-wrap gap-3">
+              <button
+                class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-200 flex items-center"
+              >
+                <a href="/truyen/<%= story.id %>/chuong/1">
+                  <i class="fas fa-play mr-2"></i>
+                  Đọc từ đầu
+                </a>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story Description -->
+      <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">
+          <i class="fas fa-file-text text-blue-600 mr-2"></i>
+          Văn án
+        </h2>
+        <div class="text-gray-700 leading-loose">
+          <p class="mb-4"><%= story.summary %></p>
+        </div>
+      </div>
+
+      <!-- Chapter List -->
+      <div class="bg-white rounded-lg shadow-md p-6">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          <i class="fas fa-list text-blue-600 mr-2"></i>
+          Danh sách chương
+        </h2>
+
+        <div class="space-y-3">
+          <% chapters.forEach(chap => { %>
+          <a
+            href="/truyen/<%= storyId %>/chuong/<%= chap.chapter_number %>"
+            class="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 transition duration-200"
+          >
+            <div class="flex items-center">
+              <span
+                class="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full mr-3"
+              >
+                <%= chap.chapter_number %>
+              </span>
+              <span class="font-medium">Chương <%= chap.chapter_number %></span>
+            </div>
+            <i class="fas fa-chevron-right text-gray-400"></i>
+          </a>
+          <% }) %>
+        </div>
+        <div class="flex justify-center mt-6 flex-wrap gap-2">
+          <% if (pagination.page > 1) { %>
+          <a
+            href="?page=<%= pagination.page - 1 %>"
+            class="px-3 py-2 border rounded-md bg-white hover:bg-gray-100 flex items-center"
+          >
+            <i class="fas fa-chevron-left mr-1"></i> Prev
+          </a>
+          <% } %> <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+          <a
+            href="?page=<%= i %>"
+            class="px-3 py-2 border rounded-md <%= pagination.page === i ? 'bg-blue-500 text-white font-semibold' : 'bg-white text-gray-800 hover:bg-gray-100' %>"
+          >
+            <%= i %>
+          </a>
+          <% } %> <% if (pagination.page < pagination.totalPages) { %>
+          <a
+            href="?page=<%= pagination.page + 1 %>"
+            class="px-3 py-2 border rounded-md bg-white hover:bg-gray-100 flex items-center"
+          >
+            Next <i class="fas fa-chevron-right ml-1"></i>
+          </a>
+          <% } %>
+        </div>
+
+        <div class="text-center mt-2 text-sm text-gray-500">
+          Trang <%= pagination.page %> / <%= pagination.totalPages %>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <p class="text-gray-400">
+            © 2024 TruyệnOnline. Tất cả các quyền được bảo lưu.
+          </p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

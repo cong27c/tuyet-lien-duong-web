@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tuyết Liên Đường - Đọc truyện tranh online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .manga-card {
+        transition: transform 0.2s ease-in-out;
+      }
+      .manga-card:hover {
+        transform: translateY(-2px);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+      .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+      .banner-overlay {
+        background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Hero Banner -->
+    <section class="relative h-64 md:h-80 overflow-hidden">
+      <div class="absolute inset-0 gradient-bg">
+        <div class="banner-overlay absolute inset-0"></div>
+        <div class="relative container mx-auto px-4 h-full flex items-center">
+          <div class="text-white">
+            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-shadow">
+              Đọc truyện tranh online
+            </h2>
+            <p class="text-lg md:text-xl mb-6 text-shadow">
+              Hàng nghìn bộ truyện hay đang chờ bạn khám phá
+            </p>
+            <a href="/tong-hop-cac-series-cuc-hot">
+              <button
+                class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition duration-300"
+              >
+                Khám phá ngay
+              </button>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+      <!-- Featured Section -->
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Truyện nổi bật</h2>
+          <a
+            href="/tong-hop-cac-series-cuc-hot"
+            class="text-blue-600 hover:text-blue-800"
+            >Xem tất cả</a
+          >
+        </div>
+
+        <div
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
+        >
+          <% for(let featuredStory of featuredStories) {%>
+          <!-- Manga Card -->
+          <a href="/truyen/<%= featuredStory.id  %>" class="block">
+            <div
+              class="manga-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+            >
+              <div class="aspect-w-3 aspect-h-4 bg-gray-200">
+                <img
+                  src="<%= featuredStory.image %>"
+                  alt="<%= featuredStory.title %>"
+                  class="w-full h-48 object-cover"
+                />
+              </div>
+              <div class="p-3">
+                <h3 class="font-semibold text-sm mb-1 line-clamp-2">
+                  <%= featuredStory.title %>
+                </h3>
+                <p class="text-xs text-gray-600 mb-2">
+                  Chap <%= featuredStory.number_of_chapters %>
+                </p>
+                <div class="flex items-center text-xs text-gray-500">
+                  <i class="fas fa-eye mr-1"></i>
+                  <span><%= featuredStory.readers %></span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <% } %>
+        </div>
+      </section>
+
+      <!-- Recently Updated -->
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-6 pointer">
+          <h2 class="text-2xl font-bold text-gray-800">Mới cập nhật</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% for(let recentStory of recentStories) {%>
+          <a href="/truyen/<%= recentStory.id  %>" class="block">
+            <div
+              class="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+            >
+              <div class="flex">
+                <div class="w-20 h-28 bg-gray-200 flex-shrink-0">
+                  <img
+                    src="<%= recentStory.image %>"
+                    alt="<%= recentStory.title %>"
+                    class="w-full h-full object-cover"
+                    onerror="this.src='/images/default-thumbnail.jpg';"
+                  />
+                </div>
+                <div class="flex-1 p-4">
+                  <h3 class="font-semibold mb-2 line-clamp-2">
+                    <%= recentStory.title %>
+                  </h3>
+                  <p class="text-sm text-gray-600 mb-2">
+                    Chap <%= recentStory.number_of_chapters %> - Mới nhất
+                  </p>
+                  <div
+                    class="flex items-center justify-between text-xs text-gray-500"
+                  >
+                    <% const randomNumber = Math.floor(Math.random() * 5) + 1;
+                    %>
+                    <span><%= randomNumber %> giờ trước</span>
+                    <div class="flex items-center">
+                      <i class="fas fa-eye mr-1"></i>
+                      <span><%= recentStory.readers %></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <% } %>
+        </div>
+      </section>
+
+      <!-- Categories -->
+      <section class="mb-12">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Thể loại</h2>
+        </div>
+
+        <div
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3"
+        >
+          <% for (let genre of genres) { %>
+          <a
+            href="truyen/the-loai/<%= genre.value %>"
+            class="flex flex-col items-center justify-center bg-white border border-gray-200 hover:border-blue-400 shadow-sm hover:shadow-md rounded-2xl p-3 text-gray-700 transition duration-200"
+          >
+            <i class="fas fa-book-open text-xl text-blue-500 mb-2"></i>
+            <p class="text-sm font-medium text-center"><%= genre.title %></p>
+          </a>
+          <% } %>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
