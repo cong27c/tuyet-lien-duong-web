@@ -1,15 +1,19 @@
 const input = document.getElementById("search-input");
 const suggestionsBox = document.getElementById("suggestions-box");
+const form = document.getElementById("search-form");
 
 let timeout = null;
-
+let currentSuggestions = [];
+console.log("đã sửa");
+console.log(">>> common.js loaded <<<");
 input.addEventListener("input", () => {
   const query = input.value.trim();
-
   clearTimeout(timeout);
+
   if (!query) {
     suggestionsBox.classList.add("hidden");
     suggestionsBox.innerHTML = "";
+    currentSuggestions = [];
     return;
   }
 
@@ -17,25 +21,46 @@ input.addEventListener("input", () => {
     fetch(`/truyen/goi-y?q=${encodeURIComponent(query)}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.length === 0) {
+        if (!data || data.length === 0) {
           suggestionsBox.classList.add("hidden");
           suggestionsBox.innerHTML = "";
+          currentSuggestions = [];
           return;
         }
+
+        currentSuggestions = data;
 
         suggestionsBox.innerHTML = data
           .map(
             (item) => `
-              <a href="/truyen/${item.id}" class="block px-4 py-2 hover:bg-gray-100 text-gray-800">${item.title}</a>
-            `
+                <a href="/truyen/${item.id}" class="block px-4 py-2 hover:bg-gray-100 text-gray-800">
+                  ${item.title}
+                </a>
+              `
           )
           .join("");
 
         suggestionsBox.classList.remove("hidden");
       });
-  }, 300); // debounce 300ms
+  }, 300);
 });
 
+// ✅ Chặn form nếu không có gợi ý
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // chặn mặc định trước
+
+  const firstSuggestion = suggestionsBox.querySelector("a");
+
+  if (firstSuggestion) {
+    // Nếu có gợi ý => chuyển hướng
+    window.location.href = firstSuggestion.href;
+  } else {
+    // Không có gợi ý => chặn tìm kiếm, có thể báo cho người dùng
+    alert("Vui lòng chọn truyện từ gợi ý."); // hoặc dùng toast, modal...
+  }
+});
+
+// Ẩn gợi ý khi click ra ngoài
 document.addEventListener("click", (e) => {
   if (!suggestionsBox.contains(e.target) && e.target !== input) {
     suggestionsBox.classList.add("hidden");
@@ -75,7 +100,6 @@ window.addEventListener("DOMContentLoaded", () => {
     .then((res) => res.json())
     .then((data) => {
       links = [data.tiktok, data.shopee];
-      console.log(links);
 
       const overlay = document.getElementById("adOverlay");
       if (clickCount >= links.length) {

@@ -9,7 +9,7 @@ const handleSession = require("./src/middlewares/admin/handleSession");
 const shareLocals = require("./src/middlewares/admin/shareLocals");
 const requireLogin = require("./src/middlewares/admin/requireLogin");
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 //Middlewares
 app.use(cookieParser());
