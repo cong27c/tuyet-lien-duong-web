@@ -4,8 +4,6 @@ const form = document.getElementById("search-form");
 
 let timeout = null;
 let currentSuggestions = [];
-console.log("đã sửa");
-console.log(">>> common.js loaded <<<");
 input.addEventListener("input", () => {
   const query = input.value.trim();
   clearTimeout(timeout);
