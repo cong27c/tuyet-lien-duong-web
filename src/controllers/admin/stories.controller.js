@@ -68,7 +68,6 @@ exports.store = async (req, res) => {
     res.redirect("/admin/stories");
   } catch (error) {
     console.error("Lỗi khi tạo truyện/chương:", error);
-    res.status(500).send("Đã xảy ra lỗi khi tạo truyện.", error);
   }
 };
 
