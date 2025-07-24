@@ -29,11 +29,6 @@ exports.show = async (req, res) => {
     );
     const { chapters } = await chaptersService.getByStoryId(storyId);
     const story = await storiesService.getById(storyId);
-    if (!chapter) {
-      return res
-        .status(404)
-        .render("errors/404", { message: "Chương không tồn tại" });
-    }
 
     res.render("chapter/index", {
       story,
