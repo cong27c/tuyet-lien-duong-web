@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path"); // <--- thêm dòng này
 const webRouter = require("./src/routes/web/index");
 const adminRouter = require("./src/routes/admin/index");
 const apiRouter = require("./src/routes/api/index");
@@ -18,8 +19,8 @@ app.use(express.json());
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
+app.set("views", path.join(__dirname, "src", "views")); // ✅ dùng đường dẫn tuyệt đối
 app.set("view engine", "ejs");
-app.set("views", "./src/views");
 app.use(expressLayouts);
 app.set("layout", "layouts/default/index");
 
