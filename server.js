@@ -29,11 +29,8 @@ app.use("/api", apiRouter);
 app.use("/admin", handleSession, shareLocals, requireLogin, adminRouter);
 
 app.use((req, res) => {
-  res.status(404).render("not-found", {
-    layout: "layouts/notFound",
-  });
+  res.status(404).render("errors/404");
 });
-
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on http://0.0.0.0:${PORT}`);
 });

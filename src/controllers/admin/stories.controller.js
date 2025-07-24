@@ -11,6 +11,7 @@ exports.index = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
+  console.log("hello");
   res.render("admin/stories/create", {
     old: {},
     errors: {},
