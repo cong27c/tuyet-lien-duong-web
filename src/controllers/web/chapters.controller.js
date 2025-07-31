@@ -39,6 +39,6 @@ exports.show = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res.status(500).render("errors/500", { message: "Lỗi server" });
+    res.status(404).render("Lỗi khi tạo chương");
   }
 };

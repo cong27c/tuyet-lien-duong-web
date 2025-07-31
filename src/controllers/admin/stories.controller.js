@@ -11,7 +11,6 @@ exports.index = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  console.log("hello");
   res.render("admin/stories/create", {
     old: {},
     errors: {},
@@ -38,6 +37,8 @@ exports.show = async (req, res) => {
 
 exports.store = async (req, res) => {
   const { genre, number_of_chapters, content, ...data } = req.body;
+
+  console.log(content);
   const image = req.file ? `/uploads/${req.file.filename}` : null;
 
   data.image = image;
@@ -69,7 +70,7 @@ exports.store = async (req, res) => {
     res.redirect("/admin/stories");
   } catch (error) {
     console.error("Lỗi khi tạo truyện/chương:", error);
-    res.status(500).send("Có lỗi xảy ra khi tạo truyện.");
+    res.status(404).render("Lỗi khi tạo truyện");
   }
 };
 

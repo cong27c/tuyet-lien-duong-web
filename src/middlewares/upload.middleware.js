@@ -12,11 +12,11 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif/;
-  const isValid = allowedTypes.test(
-    path.extname(file.originalname).toLowerCase()
-  );
-  isValid ? cb(null, true) : cb(new Error("Chỉ cho phép file ảnh"));
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Chỉ cho phép file ảnh"));
+  }
 };
 
 const upload = multer({ storage, fileFilter });

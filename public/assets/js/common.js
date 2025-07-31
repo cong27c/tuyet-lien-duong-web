@@ -9,7 +9,7 @@ input.addEventListener("input", () => {
   clearTimeout(timeout);
 
   if (!query) {
-    suggestionsBox.classList.add("hidden");
+    suggestionsBox.classList.add("hidden");x``
     suggestionsBox.innerHTML = "";
     currentSuggestions = [];
     return;
