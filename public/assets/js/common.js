@@ -9,7 +9,8 @@ input.addEventListener("input", () => {
   clearTimeout(timeout);
 
   if (!query) {
-    suggestionsBox.classList.add("hidden");x``
+    suggestionsBox.classList.add("hidden");
+    x``;
     suggestionsBox.innerHTML = "";
     currentSuggestions = [];
     return;
@@ -66,52 +67,47 @@ document.addEventListener("click", (e) => {
 });
 
 // Liên kết quảng cáo
-
 let links = [];
-let clickCount = parseInt(localStorage.getItem("clickCount") || "0");
-let lastHideTime = parseInt(localStorage.getItem("lastHideTime") || "0");
+let clickIndex = parseInt(localStorage.getItem("clickIndex") || "0");
+let lastClickTime = parseInt(localStorage.getItem("lastClickTime") || "0");
 
 function handleClickRedirect() {
   const overlay = document.getElementById("adOverlay");
 
-  if (clickCount < links.length) {
-    window.open(links[clickCount], "_blank");
-    clickCount++;
-    localStorage.setItem("clickCount", clickCount);
-  }
+  if (links.length > 0) {
+    window.open(links[clickIndex], "_blank");
 
-  if (clickCount >= links.length) {
-    overlay.style.display = "none";
+    // Cập nhật index ưu tiên click
+    clickIndex = (clickIndex + 1) % links.length;
+    localStorage.setItem("clickIndex", clickIndex.toString());
+
+    // Ghi nhận thời gian click
     const now = Date.now();
-    localStorage.setItem("lastHideTime", now);
+    localStorage.setItem("lastClickTime", now.toString());
 
-    setTimeout(() => {
-      clickCount = 0;
-      localStorage.setItem("clickCount", "0");
-      overlay.style.display = "flex";
-    }, 60000);
+    // Ẩn overlay
+    overlay.style.display = "none";
   }
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+  // ✅ Kiểm tra nếu đường dẫn bắt đầu bằng "/truyen"
+  if (!window.location.pathname.startsWith("/truyen")) return;
+
   fetch("/api/overlay-links")
     .then((res) => res.json())
     .then((data) => {
-      links = [data.tiktok, data.shopee];
+      // Tỉ lệ: Shopee 3 lần, TikTok 1 lần
+      links = [data.shopee, data.shopee, data.shopee, data.tiktok];
 
       const overlay = document.getElementById("adOverlay");
-      if (clickCount >= links.length) {
-        const now = Date.now();
-        const elapsed = now - lastHideTime;
-        if (elapsed >= 60000) {
-          clickCount = 0;
-          localStorage.setItem("clickCount", "0");
-          overlay.style.display = "flex";
-        } else {
-          overlay.style.display = "none";
-        }
-      } else {
+      const now = Date.now();
+      const elapsed = now - lastClickTime;
+
+      if (elapsed >= 10 * 60 * 1000) {
         overlay.style.display = "flex";
+      } else {
+        overlay.style.display = "none";
       }
     });
 });
