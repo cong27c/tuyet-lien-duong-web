@@ -50,6 +50,7 @@ exports.store = async (req, res) => {
     const { id: storyId } = await storiesService.create(data);
 
     // 2. Chia nội dung thành các chương
+    console.log(data.number_of_chapters);
     const chapterContents = splitContentIntoNChapters(
       content,
       data.number_of_chapters

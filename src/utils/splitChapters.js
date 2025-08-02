@@ -1,10 +1,15 @@
 function splitContentIntoNChapters(content, numChapters) {
-  const paragraphs = content.split(/\n\s*\n/); // tách theo 2 dòng trắng
-  const paragraphsPerChapter = Math.ceil(paragraphs.length / numChapters);
+  let parts = content.split(/\n\s*\n/);
+
+  if (parts.length < numChapters) {
+    parts = content.split(/(?<=[.?!])\s+(?=[A-ZÀ-Ỵ])/);
+  }
+
+  const partsPerChapter = Math.ceil(parts.length / numChapters);
   const chapters = [];
 
-  for (let i = 0; i < paragraphs.length; i += paragraphsPerChapter) {
-    chapters.push(paragraphs.slice(i, i + paragraphsPerChapter).join("\n\n"));
+  for (let i = 0; i < parts.length; i += partsPerChapter) {
+    chapters.push(parts.slice(i, i + partsPerChapter).join(" "));
   }
 
   return chapters;
