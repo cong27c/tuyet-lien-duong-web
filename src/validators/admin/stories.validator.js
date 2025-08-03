@@ -28,11 +28,6 @@ const storySchema = {
       errorMessage: "Vui lòng nhập tên tác giả",
     },
   },
-  content: {
-    notEmpty: {
-      errorMessage: "Vui lòng nhập nội dung truyện",
-    },
-  },
   rating: {
     notEmpty: {
       errorMessage: "Vui lòng chọn đánh giá",

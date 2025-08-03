@@ -18,7 +18,6 @@ exports.showChapters = async (req, res) => {
     storyId,
   });
 };
-
 exports.show = async (req, res) => {
   const { storyId, chapterNumber } = req.params;
 

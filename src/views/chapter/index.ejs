@@ -124,10 +124,10 @@
                 <div class="chapter-list">
                   <% chapters.forEach((ch) => { %>
                   <a
-                    href="/truyen/<%= storyId %>/chuong/<%= ch.chapter_number %>"
-                    class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 <%= ch.chapter_number === chapterNumber ? 'bg-blue-50 dark:bg-blue-900 text-primary dark:text-blue-400 font-medium' : '' %>"
+                    href="/truyen/<%= storyId %>/chuong/<%= ch.index_order %>"
+                    class="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 <%= ch.index_order === chapterNumber ? 'bg-blue-50 dark:bg-blue-900 text-primary dark:text-blue-400 font-medium' : '' %>"
                   >
-                    Chương <%= ch.chapter_number %>
+                    Chương <%= ch.index_order %>
                   </a>
                   <% }); %>
                 </div>
@@ -153,7 +153,7 @@
             </button>
             <% } %>
             <a
-              href="/truyen/<%= storyId %>/chuong/<%= chapters[chapters.length - 1].chapter_number %>"
+              href="/truyen/<%= storyId %>/chuong/<%= chapters[chapters.length - 1].index_order %>"
               class="nav-button px-3 py-2 text-sm bg-white dark:bg-gray-700 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 hover:shadow-md"
             >
               Cuối ⏭

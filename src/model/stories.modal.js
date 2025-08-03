@@ -123,3 +123,8 @@ exports.findByGenre = async (genre) => {
   const [rows] = await db.query(query, [likePattern]);
   return rows;
 };
+
+exports.updateNumberOfChapters = async (story_id, count) => {
+  const sql = `UPDATE stories SET number_of_chapters = ? WHERE id = ?`;
+  await db.query(sql, [count, story_id]);
+};

@@ -1,80 +1,66 @@
 const db = require("../configs/db");
-const { buildInsertQuery, buildUpdateQuery } = require("../utils/queryBuilder");
 
-exports.findAll = async () => {
-  const [chapters] = await db.query("select * from chapters");
-  return chapters;
+const Chapter = {
+  async create({ story_id, title, content, index_order }) {
+    const sql = `
+      INSERT INTO chapters (story_id, title, content, index_order, created_at)
+      VALUES (?, ?, ?, ?, NOW())
+    `;
+    const values = [story_id, title, content, index_order];
+    await db.query(sql, values);
+  },
+
+  async findByStoryId(story_id) {
+    const sql = `SELECT * FROM chapters WHERE story_id = ? ORDER BY index_order ASC`;
+    const [rows] = await db.query(sql, [story_id]);
+    return rows;
+  },
+  async findByStoryIdAndNumber(storyId, chapterNumber) {
+    const [rows] = await db.query(
+      `SELECT * FROM chapters WHERE story_id = ? AND index_order = ? LIMIT 1`,
+      [storyId, chapterNumber]
+    );
+    return rows[0] || null;
+  },
+
+  async findMaxIndex(story_id) {
+    const sql = `SELECT MAX(index_order) AS max_index FROM chapters WHERE story_id = ?`;
+    const [rows] = await db.query(sql, [story_id]);
+    return rows[0]?.max_index || 0;
+  },
+  async findById(id) {
+    const [rows] = await db.query(`SELECT * FROM chapters WHERE id = ?`, [id]);
+    return rows[0] || null;
+  },
+
+  async updateById(id, { title, content }) {
+    const sql = `
+      UPDATE chapters
+      SET title = ?, content = ?
+      WHERE id = ?
+    `;
+    await db.query(sql, [title, content, id]);
+  },
+
+  async deleteById(id) {
+    const sql = `DELETE FROM chapters WHERE id = ?`;
+    await db.query(sql, [id]);
+  },
+  async findByStoryId(storyId, offset = 0, limit = 10) {
+    const [rows] = await db.query(
+      `SELECT * FROM chapters WHERE story_id = ? ORDER BY index_order ASC LIMIT ? OFFSET ?`,
+      [storyId, limit, offset]
+    );
+    return rows;
+  },
+
+  async countByStoryId(storyId) {
+    const [[{ count }]] = await db.query(
+      `SELECT COUNT(*) as count FROM chapters WHERE story_id = ?`,
+      [storyId]
+    );
+    return count;
+  },
 };
 
-exports.findById = async (id) => {
-  const [chapter] = await db.query(`select * from chapters where id = ?`, [id]);
-  return chapter.length ? chapter[0] : null;
-};
-
-exports.create = async (data) => {
-  const { columns, placeholders, values } = buildInsertQuery(data);
-
-  const query = `INSERT INTO chapters (${columns}) VALUES (${placeholders});`;
-
-  const [{ insertId }] = await db.query(query, values);
-
-  return {
-    id: insertId,
-    ...data,
-  };
-};
-
-exports.findByStoryIdAndNumber = async (storyId, chapterNumber) => {
-  const [result] = await db.query(
-    "SELECT * FROM chapters WHERE story_id = ? AND chapter_number = ?",
-    [storyId, chapterNumber]
-  );
-
-  return result.length ? result[0] : null;
-};
-
-exports.update = async (id, data) => {
-  const { setClause, values } = buildUpdateQuery(data);
-
-  values.push(id);
-
-  const query = `UPDATE chapters SET ${setClause} WHERE id = ?;`;
-  await db.query(query, values);
-
-  return {
-    id,
-    ...data,
-  };
-};
-
-exports.remove = async (id) => {
-  const [{ affectedRows }] = await db.query(
-    `delete from chapters where id = ?`,
-    [id]
-  );
-  return affectedRows > 0;
-};
-
-exports.findByStoryId = async (storyId) => {
-  const [chapters] = await db.query(
-    `SELECT * FROM chapters WHERE story_id = ? ORDER BY chapter_number ASC`,
-    [storyId]
-  );
-  return chapters;
-};
-
-exports.findByStoryIdWithPagination = async (storyId, limit, offset) => {
-  const [chapters] = await db.query(
-    `SELECT * FROM chapters WHERE story_id = ? ORDER BY chapter_number ASC LIMIT ? OFFSET ?`,
-    [storyId, limit, offset]
-  );
-  return chapters;
-};
-
-exports.deleteByStoryId = async (storyId) => {
-  const [{ affectedRows }] = await db.query(
-    `DELETE FROM chapters WHERE story_id = ?`,
-    [storyId]
-  );
-  return affectedRows > 0;
-};
+module.exports = Chapter;

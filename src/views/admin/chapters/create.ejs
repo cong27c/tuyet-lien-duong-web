@@ -1,0 +1,54 @@
+<div class="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-2xl font-semibold text-gray-800">
+      <i class="fas fa-plus-circle text-indigo-600 mr-2"></i> Thêm chương mới
+      cho truyện "<%= story.title %>"
+    </h2>
+    <a
+      href="/admin/stories"
+      class="text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+    >
+      ← Quay lại danh sách truyện
+    </a>
+  </div>
+
+  <form method="POST" action="/admin/chapters/create" class="space-y-5">
+    <input type="hidden" name="story_id" value="<%= story.id %>" />
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1"
+        >Tiêu đề chương</label
+      >
+      <input
+        type="text"
+        name="title"
+        required
+        placeholder="Ví dụ: Khởi đầu"
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 mb-1"
+        >Nội dung chương</label
+      >
+      <textarea
+        name="content"
+        rows="10"
+        required
+        placeholder="Nhập nội dung chương tại đây..."
+        class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      ></textarea>
+    </div>
+
+    <div class="text-right">
+      <button
+        type="submit"
+        class="inline-flex items-center gap-2 bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition"
+      >
+        <i class="fas fa-save"></i>
+        Thêm chương
+      </button>
+    </div>
+  </form>
+</div>

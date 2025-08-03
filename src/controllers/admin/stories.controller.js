@@ -4,7 +4,7 @@ const splitContentIntoNChapters = require("../../utils/splitChapters");
 
 exports.index = async (req, res) => {
   const stories = await storiesService.getAll();
-
+  console.log(stories);
   res.render("admin/stories/index", {
     stories,
   });
@@ -28,50 +28,42 @@ exports.edit = async (req, res) => {
 };
 
 exports.show = async (req, res) => {
+  const storyId = req.params.id;
   const story = await storiesService.getById(req.params.id);
+  if (!story) return res.status(404).send("Không tìm thấy truyện.");
+
+  const chapters = await chaptersService.findByStoryId(storyId);
 
   res.render("admin/stories/show", {
     story,
+    chapters,
   });
 };
-
 exports.store = async (req, res) => {
-  const { genre, number_of_chapters, content, ...data } = req.body;
-
-  console.log(content);
+  const { genre, chapter_title, chapter_content, ...data } = req.body;
   const image = req.file ? `/uploads/${req.file.filename}` : null;
 
   data.image = image;
   data.genre = Array.isArray(genre) ? genre.join(",") : genre;
-  data.number_of_chapters = parseInt(number_of_chapters) || 1;
 
   try {
-    // 1. Lưu truyện
+    // 1. Tạo truyện
     const { id: storyId } = await storiesService.create(data);
 
-    // 2. Chia nội dung thành các chương
-    console.log(data.number_of_chapters);
-    const chapterContents = splitContentIntoNChapters(
-      content,
-      data.number_of_chapters
-    );
-
-    // 3. Lưu từng chương bằng service
-    for (let i = 0; i < chapterContents.length; i++) {
-      const chapterData = {
+    // 2. Nếu có chương đầu tiên
+    if (chapter_title && chapter_content) {
+      await chaptersService.create({
         story_id: storyId,
-        chapter_number: i + 1,
-        title: `Chương ${i + 1}`,
-        content: chapterContents[i],
-      };
-
-      await chaptersService.create(chapterData);
+        title: `Chương 1 - ${chapter_title.trim()}`,
+        content: chapter_content.trim(),
+        index_order: 1,
+      });
     }
 
     res.redirect("/admin/stories");
   } catch (error) {
-    console.error("Lỗi khi tạo truyện/chương:", error);
-    res.status(404).render("Lỗi khi tạo truyện");
+    console.error("Lỗi tạo truyện/chương:", error);
+    res.status(500).render("error", { message: "Không thể tạo truyện" });
   }
 };
 
