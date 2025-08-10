@@ -79,6 +79,7 @@
                   src="<%= featuredStory.image %>"
                   alt="<%= featuredStory.title %>"
                   class="w-full h-full object-cover"
+                  onerror="this.onerror=null;this.src='/uploads/defaultImage.jfif';"
                 />
               </div>
 
@@ -118,9 +119,10 @@
               <div class="flex">
                 <div class="w-20 h-28 bg-gray-200 flex-shrink-0">
                   <img
-                    src="<%= recentStory.image %> "
+                    src="<%= recentStory.image %>"
                     alt="<%= recentStory.title %>"
                     class="w-full h-full object-cover"
+                    onerror="this.onerror=null;this.src='/uploads/defaultImage.jfif';"
                   />
                 </div>
                 <div class="flex-1 p-4">

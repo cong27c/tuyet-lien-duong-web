@@ -4,7 +4,6 @@ const splitContentIntoNChapters = require("../../utils/splitChapters");
 
 exports.index = async (req, res) => {
   const stories = await storiesService.getAll();
-  console.log(stories);
   res.render("admin/stories/index", {
     stories,
   });
@@ -19,7 +18,7 @@ exports.create = async (req, res) => {
 
 exports.edit = async (req, res) => {
   const story = await storiesService.getById(req.params.id);
-
+  console.log(story);
   res.render("admin/stories/edit", {
     story,
     old: {},
@@ -76,8 +75,20 @@ exports.loadStory = async (req, res, next) => {
 };
 
 exports.update = async (req, res) => {
-  const { genre, ...data } = req.body;
+  const { genre, is_featured, oldImage, ...data } = req.body;
+  const newImage = req.file ? `/uploads/${req.file.filename}` : undefined;
+
+  if (newImage !== undefined) {
+    data.image = newImage;
+  } else if (oldImage) {
+    data.image = oldImage;
+  }
+
   data.genre = Array.isArray(genre) ? genre.join(",") : genre;
+  console.log(is_featured);
+  data.is_featured = is_featured ? 1 : 0;
+
+  console.log("DATA trước khi update:", data);
 
   await storiesService.update(req.params.id, data);
 

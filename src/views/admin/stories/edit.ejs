@@ -86,42 +86,117 @@
     <% } %>
   </div>
 
-  <!-- Thể loại và Tác giả -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-    <div>
-      <label class="block text-sm font-medium text-gray-700 mb-2">
-        <i class="fas fa-tags text-purple-500 mr-2"></i> Thể loại truyện
-      </label>
-      <select
-        name="genre"
-        class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
-          <%= errors?.genre ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
-      >
-        <% 
-        const selectedGenre = old?.genre || story.genre || '' 
-  
-        const genres = [
-          { title: "Chọn thể loại", value: "" },
-          { title: "Hành động", value: "hanh-dong" },
-          { title: "Tình cảm", value: "tinh-cam" },
-          { title: "Hài hước", value: "hai-huoc" },
-          { title: "Kinh dị", value: "kinh-di" },
-          { title: "Phiêu lưu", value: "phieu-luu" },
-          { title: "Khoa học viễn tưởng", value: "khoa-hoc" },
-          { title: "Fantasy", value: "fantasy" },
-          { title: "Light Novel", value: "light-novel" },
-          { title: "Slice of Life", value: "slice-of-life" },
-        ] %>
-        <% for (let genre of genres) { %>
-          <option value="<%= genre.value %>" <%= genre.value === selectedGenre ? 'selected' : '' %>><%= genre.title %></option>
-        <% } %>
-      </select>
-      <% if (errors?.genre) { %>
-        <p class="text-sm text-red-600 mt-1"><%= errors.genre %></p>
-      <% } %>
-    </div>
+<div>
+  <label class="block text-sm font-medium text-gray-700 mb-2">
+    <i class="fas fa-image text-pink-500 mr-2"></i> Ảnh bìa truyện
+  </label>
 
-    <div>
+  <% if (story?.image) { %>
+    <img src="<%= story.image %>" alt="Ảnh bìa truyện" class="mb-2 max-w-xs rounded" />
+  <% } %>
+
+  <input
+    type="file"
+    name="image"
+    accept="image/*"
+    class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 border-gray-300 focus:ring-blue-500"
+  />
+
+  <input type="hidden" name="oldImage" value="<%= story.image %>" />
+</div>
+
+<!-- Thể loại và Tác giả -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="mb-6">
+  <label for="genre" class="block text-sm font-semibold text-gray-800 mb-2">
+    <i class="fas fa-tags text-purple-600 mr-2"></i> Thể loại truyện
+  </label>
+
+  <% 
+    let selectedGenres;
+    if (Array.isArray(story?.genre)) {
+      selectedGenres = story.genre;
+    } else if (typeof story?.genre === 'string') {
+      selectedGenres = story.genre.split(',').map(s => s.trim()).filter(Boolean);
+    } else {
+      selectedGenres = [];
+    }
+
+    const genres = [
+      { title: "ABO", value: "abo" },
+      { title: "BE", value: "be" },
+      { title: "Báo Thù", value: "bao-thu" },
+      { title: "Chữa Lành", value: "chua-lanh" },
+      { title: "Cung Đấu", value: "cung-dau" },
+      { title: "Cổ Đại", value: "co-dai" },
+      { title: "Cứu Rỗi", value: "cuu-roi" },
+      { title: "Gia Đấu", value: "gia-dau" },
+      { title: "HE", value: "he" },
+      { title: "Hiện Đại", value: "hien-dai" },
+      { title: "Hoàng Cung", value: "hoang-cung" },
+      { title: "Hoán Đổi Thân Xác", value: "hoan-doi-than-xac" },
+      { title: "Huyền Huyễn", value: "huyen-huyen" },
+      { title: "Hài Hước", value: "hai-huoc" },
+      { title: "Hào Môn", value: "hao-mon" },
+      { title: "Hệ Thống", value: "he-thong" },
+      { title: "Kinh Dị", value: "kinh-di" },
+      { title: "Linh Dị", value: "linh-di" },
+      { title: "Mạt Thế", value: "mat-the" },
+      { title: "Ngôn Tình", value: "ngon-tinh" },
+      { title: "Ngược", value: "nguoc" },
+      { title: "Ngọt Sủng", value: "ngot-sung" },
+      { title: "Nhân Thú", value: "nhan-thu" },
+      { title: "Nữ Cường", value: "nu-cuong" },
+      { title: "OE", value: "oe" },
+      { title: "SE", value: "se" },
+      { title: "Showbiz", value: "showbiz" },
+      { title: "Sinh Tồn", value: "sinh-ton" },
+      { title: "Sảng Văn", value: "sang-van" },
+      { title: "Thanh Xuân Vườn Trường", value: "thanh-xuan-vuon-truong" },
+      { title: "Thiên Kim", value: "thien-kim" },
+      { title: "Thế Thân", value: "the-than" },
+      { title: "Trọng Sinh", value: "trong-sinh" },
+      { title: "Tu Tiên", value: "tu-tien" },
+      { title: "Tình Cảm", value: "tinh-cam" },
+      { title: "Tình Cảm Gia Đình", value: "tinh-cam-gia-dinh" },
+      { title: "Tổng Tài", value: "tong-tai" },
+      { title: "Tội Phạm", value: "toi-pham" },
+      { title: "Vã Mặt", value: "va-mat" },
+      { title: "Xuyên Không", value: "xuyen-khong" },
+      { title: "Xuyên Sách", value: "xuyen-sach" },
+      { title: "Đam Mỹ", value: "dam-my" },
+      { title: "Điền Văn", value: "dien-van" },
+      { title: "Đề cử", value: "de-cu" },
+      { title: "Đọc Tâm", value: "doc-tam" }
+    ];
+  %>
+
+  <div class="relative">
+    <select
+      name="genre[]"
+      multiple
+      class="w-full h-48 bg-white px-4 py-2 pr-10 border text-sm rounded-xl shadow-sm appearance-none
+        focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500
+        <%= errors?.genre ? 'border-red-500 ring-red-300' : 'border-gray-300' %>"
+    >
+      <% for (let genre of genres) { %>
+        <option value="<%=genre.value%>" <%= selectedGenres.includes(genre.value) ? 'selected' : '' %>>
+          <%= genre.title %>
+        </option>
+      <% } %>
+    </select>
+
+    <div class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </div>
+
+  <% if (errors?.genre) { %>
+    <p class="text-sm text-red-600 mt-2"><%= errors.genre %></p>
+  <% } %>
+</div>
+
+<div>
       <label class="block text-sm font-medium text-gray-700 mb-2">
         <i class="fas fa-user-edit text-orange-500 mr-2"></i> Tác giả
       </label>
@@ -137,45 +212,49 @@
         <p class="text-sm text-red-600 mt-1"><%= errors.author %></p>
       <% } %>
     </div>
-  </div>
-
-  <!-- Nội dung truyện -->
-  <div>
-    <label class="block text-sm font-medium text-gray-700 mb-2">
-      <i class="fas fa-feather-alt text-indigo-500 mr-2"></i> Nội dung truyện
-    </label>
-    <textarea
-      name="content"
-      rows="8"
-      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 
-        <%= errors?.content ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
-      placeholder="Viết nội dung truyện tại đây..."
-    ><%= old?.content || story.content || '' %></textarea>
-    <% if (errors?.content) { %>
-      <p class="text-sm text-red-600 mt-1"><%= errors.content %></p>
-    <% } %>
-  </div>
 
  <!-- Đánh giá -->
- <div>
- <% const selectedRating = parseInt(old?.rating || story.rating || '') %>
-<select
-  name="rating"
-  class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
-    <%= errors?.rating ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
->
-  <option value="">Chọn đánh giá</option>
-  <% for (let i = 1; i <= 5; i++) { %>
-    <option value="<%= i %>" <%= selectedRating === i ? 'selected' : '' %>><%= i %> sao</option>
-  <% } %>
-</select>
+   <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    
+    <div>
+        <label for="rating" class="block text-sm font-medium text-gray-700 mb-2">
+           <i class="fas fa-star text-yellow-500 mr-2"></i> Đánh giá
+         </label>
+    <% const selectedRating = parseInt(old?.rating || story.rating || '') %>
+   <select
+     name="rating"
+     class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2
+       <%= errors?.rating ? 'border-red-500 ring-red-300' : 'border-gray-300 focus:ring-blue-500 focus:border-transparent' %>"
+   >
+     <option value="">Chọn đánh giá</option>
+     <% for (let i = 1; i <= 5; i++) { %>
+       <option value="<%= i %>" <%= selectedRating === i ? 'selected' : '' %>><%= i %> sao</option>
+     <% } %>
+   </select>
+   
+     <% if (errors?.rating) { %>
+       <p class="text-sm text-red-600 mt-1"><%= errors.rating %></p>
+     <% } %>
+   
+     </div>
+    </div>
 
-  <% if (errors?.rating) { %>
-    <p class="text-sm text-red-600 mt-1"><%= errors.rating %></p>
-  <% } %>
-
-  </div>
  
+<!-- Đánh dấu truyện nổi bật -->
+<div>
+  <label for="is_featured" class="flex items-center space-x-3">
+  <input
+  name="is_featured"
+  type="checkbox"
+  value="1"
+  <%= (old?.is_featured || story.is_featured) ? 'checked' : '' %>
+/>
+    <span class="text-sm font-medium text-gray-700">
+      <i class="fas fa-star text-yellow-500 mr-2"></i> Đánh dấu là truyện nổi bật
+    </span>
+  </label>
+</div>
+
 
 <!-- Số lượng người đọc -->
 <div>
@@ -217,9 +296,9 @@
 <div class="flex items-center mt-4">
   <input
     type="checkbox"
-    name="completed"
+    name="is_completed"
     value="1"
-    <%= (old?.completed || story.completed) ? 'checked' : '' %>
+    <%= (old?.is_completed || story.is_completed) ? 'checked' : '' %>
     class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
   />
   <label class="ml-2 block text-sm text-gray-700">

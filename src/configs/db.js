@@ -4,7 +4,7 @@ const db = mysql.createPool({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "yourpassword",
+  password: "",
   database: "metruyen_dev",
   waitForConnections: true,
   connectionLimit: 10,
@@ -14,5 +14,5 @@ const db = mysql.createPool({
   enableKeepAlive: true,
   keepAliveInitialDelay: 0,
 });
-
+// yourpassword
 module.exports = db;
